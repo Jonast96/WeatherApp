@@ -1,15 +1,15 @@
 .card-img-top {
-    height: 200px;
-    object-fit: cover;
+  height: 200px;
+  object-fit: cover;
 }
 
 body {
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #1A202C, #2D3748);
-  }
-  
-  .weather_info {
-    background-color: #1A202C;
-    padding: 1rem;
-    /* background-image: url(https://gifimage.net/wp-content/uploads/2018/11/rain-overlay-gif-8.gif); */
-  }
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #1a202c, #2d3748);
+}
+
+.weather_info {
+  background-color: #1a202c;
+  padding: 1rem;
+  /* background-image: url(https://gifimage.net/wp-content/uploads/2018/11/rain-overlay-gif-8.gif); */
+}
