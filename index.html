@@ -19,7 +19,7 @@
         Share your location or enter it below
       </h1>
       <div class="mb-4">
-        <form action="submit" class="form input-group mb-3 w-50 mx-auto">
+        <form action="submit" class="form input-group w-50 mx-auto">
           <input
             type="search"
             class="form-control search"
@@ -27,6 +27,7 @@
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
+
           <button
             class="btn btn-outline-primary"
             type="submit"
@@ -35,8 +36,15 @@
             Search
           </button>
         </form>
-        <div class="search_options justify-content-center row"></div>
+        <div class="mx-auto w-50">
+          <div
+            class="d-flex flex-column search_options"
+            role="group"
+            aria-label="Search Results"
+          ></div>
+        </div>
       </div>
+
       <div class="weather_info container rounded"></div>
     </main>
 
