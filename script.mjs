@@ -1,3 +1,5 @@
+import { API_KEY } from "./secrets.mjs"
+
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
   if (navigator.geolocation) {
@@ -22,7 +24,6 @@ showLatitudeAndLongitude()
 
 
 
-const API_KEY = 'a41bb766615fcb644552efb56837e51d';
 const weatherContainer = document.querySelector(".weather_info")
 
 async function getForecast(lat, lon) {
