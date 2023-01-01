@@ -104,7 +104,7 @@ function createWeatherInfo(data) {
   for (let i = 1; i < 4; i++) {
     const time = data.list[i].dt_txt.substring(11, 19);
     cards += `
-        <div class="card" style="width: 20rem">
+        <div class="card col-lg-3 col-md-4 col-sm-12 my-sm-2">
           <img
             src="https://media4.giphy.com/media/Tdo9vQa9zcfozYJQIY/giphy.gif?cid=790b7611e4cc8b8d487123aed137ae78c9e66fb4c2de41c7&rid=giphy.gif&ct=g"
             class="card-img-top"
@@ -141,7 +141,7 @@ function createWeatherInfo(data) {
             </ul>
           </div>
           <h3 class="text-white">Later today</h3>
-          <div class="d-flex justify-content-around">
+          <div class="row justify-content-around">
           ${cards}
           </div>
       `;
