@@ -1,5 +1,3 @@
-import { API_KEY } from "./secrets.mjs";
-
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
   if (navigator.geolocation) {
@@ -18,11 +16,13 @@ function showLatitudeAndLongitude() {
     console.log("Geolocation is not supported by this browser.");
   }
 }
+
 showLatitudeAndLongitude()
 
 
 
 
+const API_KEY = 'a41bb766615fcb644552efb56837e51d';
 const weatherContainer = document.querySelector(".weather_info")
 
 async function getForecast(lat, lon) {
@@ -41,11 +41,19 @@ const form = document.querySelector(".form");
 const container = document.querySelector(".search_options");
 const searchInput = document.querySelector(".search");
 
+/**
+ * Submit event listener for the form element.
+ * @param {Event} e - The submit event object.
+ */
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   getPosition(searchInput.value);
 });
 
+/**
+ * @async
+ * @param {string} searchInput - The location for which to get the coordinates.
+ */
 async function getPosition(searchInput) {
   const apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=5&appid=${API_KEY}`;
   try {
@@ -58,6 +66,10 @@ async function getPosition(searchInput) {
   }
 }
 
+/**
+ * Displays search suggestions as buttons in the .search_options element.
+ * @param {Object} data - The data returned from the OpenWeatherMap API.
+ */
 function displaySearchSuggestions(data) {
   console.log(data.length);
   container.innerHTML = "";
@@ -80,6 +92,7 @@ function displaySearchSuggestions(data) {
     container.appendChild(button);
   }
 }
+
 
 
 
