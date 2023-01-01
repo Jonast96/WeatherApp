@@ -1,3 +1,5 @@
+import { API_KEY } from "./secrets.mjs";
+
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
   if (navigator.geolocation) {
@@ -21,7 +23,6 @@ showLatitudeAndLongitude()
 
 
 
-const API_KEY = 'a41bb766615fcb644552efb56837e51d';
 const weatherContainer = document.querySelector(".weather_info")
 
 async function getForecast(lat, lon) {
@@ -87,6 +88,7 @@ function createWeatherInfo(data) {
   let cards = "";
 
   for (let i = 1; i < 4; i++) {
+    const time = data.list[i].dt_txt.substring(11, 19);
     cards += `
         <div class="card" style="width: 20rem">
           <img
@@ -95,7 +97,7 @@ function createWeatherInfo(data) {
             alt="..."
           />
           <div class="card-body"></div>
-          <h5 class="card-title">${data.list[i].dt_txt}</h5>
+          <h5 class="card-title">${time}</h5>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">${data.list[i].weather[0].main}</li>
             <li class="list-group-item">${data.list[i].main.temp.toFixed()}C°</li>
@@ -104,6 +106,7 @@ function createWeatherInfo(data) {
         </div>
       `;
   }
+
 
   weatherContainer.innerHTML = `
       <div>

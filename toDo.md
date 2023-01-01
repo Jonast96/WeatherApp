@@ -1,0 +1,2 @@
+- [ ] Add icons showing rain sun clouds etc
+- [ ] Add "More info"
