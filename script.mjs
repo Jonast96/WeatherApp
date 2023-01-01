@@ -1,4 +1,4 @@
-import { API_KEY } from "./secrets.mjs"
+// import { API_KEY } from "./secrets.mjs"
 
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
