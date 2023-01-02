@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +13,8 @@
     "datapackage": "^1.1.10"
   },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
 }

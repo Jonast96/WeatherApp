@@ -1,5 +1,4 @@
-// import { API_KEY } from "./secrets.mjs"
-const API_KEY = process.env.API_KEY;
+const API_KEY = "a41bb766615fcb644552efb56837e51d"
 
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
