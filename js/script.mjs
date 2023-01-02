@@ -1,4 +1,6 @@
-const API_KEY = "a41bb766615fcb644552efb56837e51d"
+import API_KEY from "./apiKey.js";
+
+// const API_KEY = "a41bb766615fcb644552efb56837e51d"
 
 function showLatitudeAndLongitude() {
   // Check if the browser supports geolocation
