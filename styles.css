@@ -13,3 +13,22 @@ body {
   padding: 1rem;
   /* background-image: url(https://gifimage.net/wp-content/uploads/2018/11/rain-overlay-gif-8.gif); */
 }
+
+
+.search {
+  width: 50%;
+  color: white;
+  background-color: rgba(255, 255, 255, 0);
+  outline: none;
+  border: none;
+  height: 2em;
+  padding-left: 1rem;
+  font-size: 24px;
+  margin-bottom: 1px;
+  border-bottom: 1px solid #333;
+}
+
+.search:focus {
+  border-bottom: 1px solid #81b5e0;
+  box-shadow: 0 1px 0 0 #eeeaea;
+}
