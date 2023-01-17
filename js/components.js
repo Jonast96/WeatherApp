@@ -1,4 +1,6 @@
 export function getOldId(code) {
+    let newCode = code;
+
     let codes = [
         { code: "clearsky", oldId: 1 },
         { code: "cloudy", oldId: 4 },
@@ -41,7 +43,8 @@ export function getOldId(code) {
         { code: "snowandthunder", oldId: 14 },
         { code: "snowshowers", oldId: 8 },
         { code: "snowshowersandthunder", oldId: 21 }];
-    let found = codes.find(({ code: c }) => c === code);
+
+    let found = codes.find(({ code: c }) => c === newCode);
     if (found) {
         let { oldId } = found;
         console.log(oldId);

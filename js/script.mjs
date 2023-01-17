@@ -18,10 +18,12 @@ showLatitudeAndLongitude()
 
 async function getForecast(lat, lon) {
   try {
+    const blurOnLoad = document.querySelector(".blur")
     const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}`;
     const response = await fetch(apiUrl);
     const data = await response.json();
     console.log(data);
+    blurOnLoad.classList.remove("blur")
     createHtml(data)
   } catch (error) {
     console.error(error);
@@ -30,7 +32,15 @@ async function getForecast(lat, lon) {
 
 async function createHtml(data) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${data.geometry.coordinates[1]}&lon=${data.geometry.coordinates[0]}`;
-  let oldId = getOldId(data.properties.timeseries[0].data.next_1_hours.summary.symbol_code);
+  let weatherId = data.properties.timeseries[0].data.next_1_hours.summary.symbol_code
+
+  if (weatherId.includes("_night")) {
+    weatherId = weatherId.replace("_night", "")
+    console.log(weatherId)
+  }
+
+  let oldId = getOldId(weatherId);
+
   const response = await fetch(url);
   const locationData = await response.json();
   const location = `${locationData.address.city}, ${locationData.address.country}`
@@ -40,13 +50,10 @@ async function createHtml(data) {
     amount: data.properties.timeseries[0].data.next_1_hours.details.precipitation_amount,
     wind: data.properties.timeseries[0].data.instant.details.wind_speed
   }
+  console.log(data.properties.timeseries[0].data.next_1_hours.summary.symbol_code)
 
   currentReportHtml(weatherData, oldId, location)
   nextHourReportHtml(data, oldId)
-
-
-
-
 }
 
 function currentReportHtml(weatherData, img, location) {
