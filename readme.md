@@ -13,3 +13,9 @@ User can view:
 
 API:
 "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=$(x)&lon=(y)"
+
+
+features to be added: 
+- Tidal water
+- Sunrise/sunset
+- Animated radar
