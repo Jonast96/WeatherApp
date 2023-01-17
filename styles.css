@@ -5,13 +5,12 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #1a202c, #2d3748);
+  background: linear-gradient(to bottom right, #201f30, #17152a);
 }
 
 .weather_info {
-  background-color: #1a202c;
+  background-color: #131220;
   padding: 1rem;
-  /* background-image: url(https://gifimage.net/wp-content/uploads/2018/11/rain-overlay-gif-8.gif); */
 }
 
 

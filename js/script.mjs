@@ -45,18 +45,14 @@ async function createHtml(data) {
   console.log(weatherData)
 
   container.innerHTML = `
-    <p class="display-6 text-light p-5">${location}</p>
-    <div
-      class="text-white d-flex justify-content-around align-items-center border border-opacity-25 rounded p-3"
-    >
-      <p class="fs-1">${weatherData.temp}°</p>
-      <p class="fs-1">${weatherData.weather}</p>
-      <p class="fs-1 fw">${weatherData.amount} mm</p>
-      <p class="fs-1 fw">${weatherData.wind} m/s</p>
-      <img src="/images/${oldId.toString().padStart(2, "0")}.png" alt="" />
-  
-    </div>
-  
+  <p class="display-6 text-light p-5">${location}</p>
+  <div class="text-white row align-items-center border border-opacity-25 rounded d-flex justify-content-center">
+    <p class="fs-1 order-lg-1 order-2 col-12 col-lg-2">${weatherData.temp}°</p>
+    <p class="fs-3 order-lg-1 order-2 col-4 col-lg-2">${weatherData.weather}</p>
+    <p class="fs-3 order-lg-1 order-2 col-4 col-lg-2">${weatherData.amount} mm</p>
+    <p class="fs-3 order-lg-1 order-2 col-4 col-lg-2">${weatherData.wind} m/s</p>
+    <img style="width:150px" class="img-fluid col-12 col-lg-2 order-1 order-lg-2" src="/images/${oldId.toString().padStart(2, "0")}.png" alt="" />
+  </div>
     `
 
 }
