@@ -33,3 +33,6 @@ body {
   border-bottom: 1px solid #81b5e0;
   box-shadow: 0 1px 0 0 #eeeaea;
 }
+#view-more-button {
+  cursor: pointer;
+}
