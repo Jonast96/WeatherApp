@@ -13,15 +13,18 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="bg-dark blur">
+  <body class="bg-dark">
     <main class="container text-center">
       <h1 class="text-light display-4 mt-5 mb-4">
         Share your location or enter it below
       </h1>
       <div class="mb-4">
-        <form action="submit" class="mx-auto">
+        <form action="submit" class="mx-auto form_container">
           <input type="search" class="search" placeholder="Location" />
         </form>
+        <div class="">
+          <ul class="results list-group list-group-flush"></ul>
+        </div>
       </div>
 
       <div class="weather_info container rounded">
@@ -48,9 +51,6 @@
           </div>
         </div>
         <div class="next_hour mt-5"></div>
-        <p class="text-decoration-underline text-light" id="view-more-button">
-          View more
-        </p>
       </div>
     </main>
 
