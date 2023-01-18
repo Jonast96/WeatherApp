@@ -9,14 +9,12 @@ body {
 }
 .blur {
   filter: blur(5px);
-
 }
 
 .weather_info {
   background-color: #131220;
   padding: 1rem;
 }
-
 
 .search {
   width: 50%;
