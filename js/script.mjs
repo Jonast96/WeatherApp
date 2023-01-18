@@ -24,8 +24,8 @@ async function getForecast(lat, lon) {
     const response = await fetch(apiUrl);
     const data = await response.json();
     console.log(data);
-    blurOnLoad.classList.remove("blur")
     createHtml(data)
+    blurOnLoad.classList.remove("blur")
   } catch (error) {
     console.error(error);
   }
@@ -46,7 +46,7 @@ async function createHtml(data) {
   }
 
   currentReportHtml(weatherData, weatherId, location)
-  nextHourReportHtml(data, weatherId)
+  nextHourReportHtml(data)
 }
 
 
