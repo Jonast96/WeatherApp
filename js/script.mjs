@@ -1,9 +1,12 @@
-
 import {
-  nextHourReportHtml,
-  currentReportHtml
-} from "./createHtml.js";
+  currentReportHtml,
+  nextHourReportHtml
+} from "./createHtml.mjs";
 const container = document.querySelector(".next_hour")
+
+/**
+ * If user has allowed location sharing, this function will run the getForecast function and display the weather for the users location
+ */
 function showLatitudeAndLongitude() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -15,22 +18,10 @@ function showLatitudeAndLongitude() {
     console.log("Geolocation is not supported by this browser.");
   }
 }
+
 showLatitudeAndLongitude()
 
-async function getLocationFromLatLon(lat, lon) {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-async function getForecast(lat, lon) {
+export async function getForecast(lat, lon) {
   try {
     const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}`;
     const response = await fetch(apiUrl);
@@ -45,10 +36,7 @@ async function getForecast(lat, lon) {
       lon: data.geometry.coordinates[0]
     }
 
-    const test = await getLocationFromLatLon(weatherData.lat, weatherData.lon)
-
-    let weatherId = data.properties.timeseries[0].data.next_1_hours.summary.symbol_code
-    currentReportHtml(weatherData, weatherId, test.address.county)
+    currentReportHtml(weatherData)
     nextHourReportHtml(data)
 
   } catch (error) {
@@ -78,7 +66,6 @@ async function getLatLng(locationName) {
       }
     }
     resultsList.innerHTML = list;
-
   } catch (error) {
     console.error(`An error occurred: ${error}`);
   }
@@ -90,17 +77,18 @@ form.addEventListener("submit", e => {
 });
 
 
-
-
 resultsList.addEventListener("click", e => {
-  if (e.target.tagName === "A") {
-    container.innerHTML = ""
-    let lat = e.target.parentNode.getAttribute("data-lat");
-    let lon = e.target.parentNode.getAttribute("data-lon");
-    getForecast(lat, lon)
-
-    resultsList.innerHTML = ""
-    searchInput.value = ""
-
-  }
+  e.target.tagName === "A"
+  let lat = e.target.parentNode.getAttribute("data-lat");
+  let lon = e.target.parentNode.getAttribute("data-lon");
+  resultsList.innerHTML = ""
+  searchInput.value = ""
+  container.innerHTML = ""
+  counter = 3
+  x = 0
+  getForecast(lat, lon)
 });
+
+
+
+
