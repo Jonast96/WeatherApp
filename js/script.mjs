@@ -19,7 +19,7 @@ function showLatitudeAndLongitude() {
   }
 }
 
-// showLatitudeAndLongitude()
+showLatitudeAndLongitude()
 
 export async function getForecast(lat, lon) {
   try {
