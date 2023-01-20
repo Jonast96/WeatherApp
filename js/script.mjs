@@ -84,8 +84,6 @@ resultsList.addEventListener("click", e => {
   resultsList.innerHTML = ""
   searchInput.value = ""
   container.innerHTML = ""
-  counter = 3
-  x = 0
   getForecast(lat, lon)
 });
 
