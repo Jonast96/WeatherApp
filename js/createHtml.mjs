@@ -1,5 +1,6 @@
 
 const container = document.querySelector(".next_hour")
+const viewMoreButton = document.querySelector(".view_more");
 
 
 export function nextHourReportHtml(data) {
@@ -22,7 +23,6 @@ export function nextHourReportHtml(data) {
     `
   }
 
-  const viewMoreButton = document.querySelector(".view_more");
   viewMoreButton.addEventListener("click", function () {
     const elementsToShow = document.querySelectorAll(".d-none");
     elementsToShow.forEach(function (element) {

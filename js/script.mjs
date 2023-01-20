@@ -3,23 +3,25 @@ import {
   nextHourReportHtml
 } from "./createHtml.mjs";
 const container = document.querySelector(".next_hour")
+const viewMoreButton = document.querySelector(".view_more");
 
 /**
  * If user has allowed location sharing, this function will run the getForecast function and display the weather for the users location
  */
 function showLatitudeAndLongitude() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
+    let watchId = navigator.geolocation.watchPosition(function (position) {
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
-      getForecast(latitude, longitude)
+      getForecast(latitude, longitude);
+      navigator.geolocation.clearWatch(watchId);
     });
   } else {
     console.log("Geolocation is not supported by this browser.");
   }
 }
 
-showLatitudeAndLongitude()
+showLatitudeAndLongitude();
 
 export async function getForecast(lat, lon) {
   try {
@@ -84,6 +86,9 @@ resultsList.addEventListener("click", e => {
   resultsList.innerHTML = ""
   searchInput.value = ""
   container.innerHTML = ""
+
+  viewMoreButton.classList.remove("d-none")
+  viewMoreButton.classList.add("d-block")
   getForecast(lat, lon)
 });
 
