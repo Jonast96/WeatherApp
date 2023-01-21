@@ -53,7 +53,7 @@ export async function currentReportHtml(weatherData) {
   const location = await getLocationFromLatLon(weatherData.lat, weatherData.lon)
   const container = document.querySelector(".container_section1")
   container.innerHTML = `
-    <p class="display-6 text-light p-5">${location.address.county}</p>
+    <p class="display-6 text-light fw-semibold p-5">${location.address.county}</p>
     <div class="text-white row align-items-center border border-opacity-25 rounded d-flex justify-content-center">
       <p class="fs-1 order-lg-1 order-2 col-12 col-lg-2">${weatherData.temp}°c</p>
       <p class="fs-3 order-lg-1 order-2 col-4 col-lg-2">${weatherData.amount} mm</p>

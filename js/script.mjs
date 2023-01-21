@@ -23,7 +23,7 @@ function showLatitudeAndLongitude() {
 
 showLatitudeAndLongitude();
 
-export async function getForecast(lat, lon) {
+async function getForecast(lat, lon) {
   try {
     const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}`;
     const response = await fetch(apiUrl);
@@ -95,3 +95,29 @@ resultsList.addEventListener("click", e => {
 
 
 
+
+
+
+
+const threeDayReportContainer = document.querySelector(".three_day_report")
+
+async function testCall(lat, lon) {
+
+  try {
+    const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${lat}&lon=${lon}`;
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    console.log(data);
+    return data
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+async function testing() {
+  const data = await testCall(5.3258, 60.3957)
+  console.log(data)
+}
+
+testing()
