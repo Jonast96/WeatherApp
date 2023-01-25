@@ -4,6 +4,8 @@ const viewMoreButton = document.querySelector(".view_more");
 
 
 export function nextHourReportHtml(data) {
+
+
   for (let i = 0; i < 8; i++) {
     const date = new Date(data.properties.timeseries[i].time);
     const options = { hour: 'numeric' };
