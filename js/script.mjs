@@ -123,15 +123,19 @@ async function averageTemperature(latitude, longitude) {
   const todayDate = today.getDate();
 
   const averages = calculateAverages(data, todayDate);
-  updateUI(averages);
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const tomorrowDay = tomorrow.toLocaleString('default', { weekday: 'long' });
   const dayAfterTomorrow = new Date();
   dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
   const dayAfterTomorrowDay = dayAfterTomorrow.toLocaleString('default', { weekday: 'long' });
-  updateDayUI(tomorrowDay, dayAfterTomorrowDay);
+
+
+  updateUI(averages, tomorrowDay, dayAfterTomorrowDay);
 }
+
+
+
 
 /**
 
@@ -147,6 +151,12 @@ function calculateAverages(data, todayDate) {
   let day1Count = 0;
   let day2Count = 0;
   let day3Count = 0;
+  let day1WeatherSymbol = []
+  let day2WeatherSymbol = []
+  let day3WeatherSymbol = []
+  let day1Downpour = 0
+  let day2Downpour = 0
+  let day3Downpour = 0
 
   for (let i = 0; i < data.properties.timeseries.length; i++) {
     const reportDate = new Date(data.properties.timeseries[i].time);
@@ -156,12 +166,25 @@ function calculateAverages(data, todayDate) {
 
     if (todayReportDate == todayDate && time >= 10 && time <= 22) {
       day1Average += data.properties.timeseries[i].data.instant.details.air_temperature;
+      day1Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+      day1WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
       day1Count++;
     } else if (todayReportDate == todayDate + 1 && time >= 10 && time <= 22) {
+      day2Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+
       day2Average += data.properties.timeseries[i].data.instant.details.air_temperature;
+      day2WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
       day2Count++;
     } else if (todayReportDate == todayDate + 2 && time >= 10 && time <= 22) {
+      day3Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+
       day3Average += data.properties.timeseries[i].data.instant.details.air_temperature;
+      if (data.properties.timeseries[i].data.next_1_hours) {
+        day3WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
+      } else {
+        day3WeatherSymbol.push(data.properties.timeseries[i].data.next_6_hours.summary.symbol_code)
+      }
+
       day3Count++;
     }
   }
@@ -170,12 +193,25 @@ function calculateAverages(data, todayDate) {
   day2Average /= day2Count;
   day3Average /= day3Count;
 
+  day1Downpour /= day1Count
+  day2Downpour /= day2Count
+  day3Downpour /= day3Count;
+
   return {
     day1Average: Math.round(day1Average),
     day2Average: Math.round(day2Average),
     day3Average: Math.round(day3Average),
+    day1Symbol: day1WeatherSymbol[1],
+    day2Symbol: day2WeatherSymbol[1],
+    day3Symbol: day3WeatherSymbol[1],
+    day1Downpour: Math.round(day1Downpour),
+    day2Downpour: Math.round(day2Downpour),
+    day3Downpour: Math.round(day3Downpour)
   };
 }
+
+
+
 
 
 /**
@@ -183,95 +219,36 @@ function calculateAverages(data, todayDate) {
 @function updateUI
 @param {Object} averages - Object with average temperatures for each day
 Updates the UI with the average temperatures for each day.
+
+
+UPDATE THIS
 */
-function updateUI(averages) {
+function updateUI(averages, tomorrowDay, dayAfterTomorrowDay) {
   const day1Temp = document.querySelector(".day1_temp")
   const day2Temp = document.querySelector(".day2_temp")
   const day3Temp = document.querySelector(".day3_temp")
-  day1Temp.innerHTML = `${averages.day1Average}c`
-  day2Temp.innerHTML = `${averages.day2Average}c`
-  day3Temp.innerHTML = `${averages.day3Average}c`
-}
+  day1Temp.innerHTML = `${averages.day1Average}°c`
+  day2Temp.innerHTML = `${averages.day2Average}°c`
+  day3Temp.innerHTML = `${averages.day3Average}°c`
 
-/**
-
-@function updateDayUI
-@param {String} tomorrowDay - The name of the day after the current day
-@param {String} dayAfterTomorrowDay - The name of the day after tomorrow
-Updates the UI with the name of the next 2 days.
-*/
-function updateDayUI(tomorrowDay, dayAfterTomorrowDay) {
   const day2Day = document.querySelector(".day2_day")
   const day3Day = document.querySelector(".day3_day")
   day2Day.innerHTML = tomorrowDay;
   day3Day.innerHTML = dayAfterTomorrowDay;
+
+
+  let img1 = document.querySelector(".day1_img")
+  let img2 = document.querySelector(".day2_img")
+  let img3 = document.querySelector(".day3_img")
+  img1.src = `./images/${averages.day1Symbol}.png`
+  img2.src = `./images/${averages.day2Symbol}.png`
+  img3.src = `./images/${averages.day3Symbol}.png`
+
+  const day1Downpour = document.querySelector(".day1_downpour")
+  const day2Downpour = document.querySelector(".day2_downpour")
+  const day3Downpour = document.querySelector(".day3_downpour")
+
+  day1Downpour.innerHTML = `${averages.day1Downpour} mm`
+  day2Downpour.innerHTML = `${averages.day2Downpour} mm`
+  day3Downpour.innerHTML = `${averages.day3Downpour} mm`
 }
-
-
-
-
-
-
-
-
-
-
-// async function filterDataForNextThreeDays(latitude, longitude) {
-//   const data = await MIApiCall(latitude, longitude);
-//   const today = new Date();
-//   const todayDate = today.getDate();
-
-//   //filter data for next three days
-//   const filteredData = data.properties.timeseries.filter(timeData => {
-//     const reportDate = new Date(timeData.time);
-//     const reportDateDate = reportDate.getDate();
-//     return reportDateDate === todayDate + 1 ||
-//       reportDateDate === todayDate + 2 ||
-//       reportDateDate === todayDate + 3;
-//   });
-
-//   //split filtered data into three arrays
-//   const dataForDay1 = filteredData.filter(timeData => {
-//     const reportDate = new Date(timeData.time);
-//     const reportDateDate = reportDate.getDate();
-//     return reportDateDate === todayDate + 1;
-//   });
-
-//   const dataForDay2 = filteredData.filter(timeData => {
-//     const reportDate = new Date(timeData.time);
-//     const reportDateDate = reportDate.getDate();
-//     return reportDateDate === todayDate + 2;
-//   });
-
-//   const dataForDay3 = filteredData.filter(timeData => {
-//     const reportDate = new Date(timeData.time);
-//     const reportDateDate = reportDate.getDate();
-//     return reportDateDate === todayDate + 3;
-//   });
-
-
-//   return [dataForDay1, dataForDay2, dataForDay3];
-// }
-
-
-
-
-
-
-
-
-
-    // threeDayReportContainer.innerHTML += `
-    //   <div class="col">
-    //   <div class="border border-white rounded-3 rounded-top p-2">
-    //     <p class="fw-semibold fs-4">Tuesday</p>
-    //     <img
-    //       style="height: 150px"
-    //       src="/images/clearsky_day.png"
-    //       alt=""
-    //     />
-    //     <p class="fs-5 border-top">Rain 4mm</p>
-    //     <p class="fs-5 border-top">3m/s</p>
-    //   </div>
-    // </div>
-    //   `
