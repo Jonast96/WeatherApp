@@ -157,6 +157,9 @@ function calculateAverages(data, todayDate) {
   let day1Downpour = 0
   let day2Downpour = 0
   let day3Downpour = 0
+  let day1Wind = 0
+  let day2Wind = 0
+  let day3Wind = 0
 
   for (let i = 0; i < data.properties.timeseries.length; i++) {
     const reportDate = new Date(data.properties.timeseries[i].time);
@@ -167,22 +170,28 @@ function calculateAverages(data, todayDate) {
     if (todayReportDate == todayDate && time >= 10 && time <= 22) {
       day1Average += data.properties.timeseries[i].data.instant.details.air_temperature;
       day1Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+      day1Wind += data.properties.timeseries[i].data.instant.details.wind_speed
       day1WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
+      console.log(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
       day1Count++;
     } else if (todayReportDate == todayDate + 1 && time >= 10 && time <= 22) {
       day2Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+      day2Wind += data.properties.timeseries[i].data.instant.details.wind_speed
 
       day2Average += data.properties.timeseries[i].data.instant.details.air_temperature;
       day2WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
       day2Count++;
     } else if (todayReportDate == todayDate + 2 && time >= 10 && time <= 22) {
-      day3Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
-
       day3Average += data.properties.timeseries[i].data.instant.details.air_temperature;
+      day3Wind += data.properties.timeseries[i].data.instant.details.wind_speed
+
       if (data.properties.timeseries[i].data.next_1_hours) {
         day3WeatherSymbol.push(data.properties.timeseries[i].data.next_1_hours.summary.symbol_code)
+        day3Downpour += data.properties.timeseries[i].data.next_1_hours.details.precipitation_amount
       } else {
         day3WeatherSymbol.push(data.properties.timeseries[i].data.next_6_hours.summary.symbol_code)
+        day3Downpour += data.properties.timeseries[i].data.next_6_hours.details.precipitation_amount
+
       }
 
       day3Count++;
@@ -197,6 +206,11 @@ function calculateAverages(data, todayDate) {
   day2Downpour /= day2Count
   day3Downpour /= day3Count;
 
+  day1Wind /= day1Count
+  day2Wind /= day2Count
+  day3Wind /= day3Count
+
+
   return {
     day1Average: Math.round(day1Average),
     day2Average: Math.round(day2Average),
@@ -206,7 +220,10 @@ function calculateAverages(data, todayDate) {
     day3Symbol: day3WeatherSymbol[1],
     day1Downpour: Math.round(day1Downpour),
     day2Downpour: Math.round(day2Downpour),
-    day3Downpour: Math.round(day3Downpour)
+    day3Downpour: Math.round(day3Downpour),
+    day1Wind: Math.round(day1Wind),
+    day2Wind: Math.round(day2Wind),
+    day3Wind: Math.round(day3Wind)
   };
 }
 
@@ -251,4 +268,12 @@ function updateUI(averages, tomorrowDay, dayAfterTomorrowDay) {
   day1Downpour.innerHTML = `${averages.day1Downpour} mm`
   day2Downpour.innerHTML = `${averages.day2Downpour} mm`
   day3Downpour.innerHTML = `${averages.day3Downpour} mm`
+
+  const day1Wind = document.querySelector(".day1_wind")
+  const day2Wind = document.querySelector(".day2_wind")
+  const day3Wind = document.querySelector(".day3_wind")
+
+  day1Wind.innerHTML = `${averages.day1Wind} m/s`
+  day2Wind.innerHTML = `${averages.day2Wind} m/s`
+  day3Wind.innerHTML = `${averages.day3Wind} m/s`
 }
